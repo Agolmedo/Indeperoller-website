@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IndepeRoller - Club de Patinaje Urbano</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --blue: #3498db;
+            --violet: #9b59b6;
+            --orange: #e67e22;
+            --light: #f5f5f5;
+            --dark: #2c3e50;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 15px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--violet);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo span {
+            color: var(--orange);
+        }
+
+        .logo i {
+            margin-right: 10px;
+            color: var(--blue);
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-item {
+            margin-left: 30px;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-link:hover {
+            color: var(--violet);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 28px;
+            background-color: var(--violet);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-weight: bold;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+        }
+
+        .btn:hover {
+            background-color: var(--blue);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-orange {
+            background-color: var(--orange);
+        }
+
+        .btn-orange:hover {
+            background-color: #d35400;
+        }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+        }
+
+        .bar {
+            display: block;
+            width: 25px;
+            height: 3px;
+            margin: 5px auto;
+            background-color: var(--dark);
+            transition: all 0.3s ease-in-out;
+        }
+
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://images.unsplash.com/photo-1531058020387-3be344556be6?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') center/cover no-repeat;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            color: white;
+            position: relative;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            animation: fadeInUp 1.2s ease;
+            line-height: 1.6;
+        }
+
+        .hero .btn {
+            animation: fadeInUp 1.4s ease;
+        }
+
+        .wave {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 1200 120" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" fill="%23f5f5f5"/></svg>');
+            background-size: cover;
+        }
+
+        section {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--violet);
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title h2::after {
+            content: "";
+            position: absolute;
+            width: 60%;
+            height: 3px;
+            background-color: var(--orange);
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .about-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .about-text {
+            flex: 1;
+            min-width: 300px;
+            padding: 0 20px;
+        }
+
+        .about-text h3 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: var(--blue);
+        }
+
+        .about-text p {
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .about-text ul {
+            list-style-type: none;
+            margin-left: 20px;
+        }
+
+        .about-text li {
+            margin-bottom: 10px;
+            position: relative;
+            padding-left: 25px;
+        }
+
+        .about-text li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--violet);
+            font-weight: bold;
+        }
+
+        .about-image {
+            flex: 1;
+            min-width: 300px;
+            text-align: center;
+        }
+
+        .about-image img {
+            max-width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo-image {
+            width: 200px;
+            height: auto;
+            margin-bottom: 20px;
+        }
+
+        .services {
+            background-color: var(--blue);
+            color: white;
+            position: relative;
+        }
+
+        .services .wave-top {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 1200 120" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><path d="M985.66,92.83C906.67,72,823.78,31,743.84,14.19c-82.26-17.34-168.06-16.33-250.45.39-57.84,11.73-114,31.07-172,41.86A600.21,600.21,0,0,1,0,27.35V120H1200V95.8C1132.19,118.92,1055.71,111.31,985.66,92.83Z" fill="%23f5f5f5"/></svg>');
+            background-size: cover;
+            transform: rotate(180deg);
+        }
+
+        .services .wave-bottom {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 1200 120" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><path d="M985.66,92.83C906.67,72,823.78,31,743.84,14.19c-82.26-17.34-168.06-16.33-250.45.39-57.84,11.73-114,31.07-172,41.86A600.21,600.21,0,0,1,0,27.35V120H1200V95.8C1132.19,118.92,1055.71,111.31,985.66,92.83Z" fill="%23f5f5f5"/></svg>');
+            background-size: cover;
+        }
+
+        .services .section-title h2 {
+            color: white;
+        }
+
+        .services .section-title h2::after {
+            background-color: var(--orange);
+        }
+
+        .service-cards {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .service-card {
+            background-color: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 30px;
+            width: 300px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .service-card i {
+            font-size: 3rem;
+            color: var(--orange);
+            margin-bottom: 20px;
+        }
+
+        .service-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+
+        .service-card p {
+            line-height: 1.6;
+        }
+
+        .gallery {
+            background-color: white;
+        }
+
+        .gallery-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            height: 250px;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.05);
+        }
+
+        .gallery-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
+            color: white;
+            padding: 15px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+        }
+
+        .gallery-item:hover .gallery-caption {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .disciplines {
+            background-color: var(--light);
+            position: relative;
+        }
+
+        .disciplines-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 40px;
+        }
+
+        .discipline-card {
+            background-color: white;
+            border-radius: 15px;
+            overflow: hidden;
+            width: 350px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .discipline-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .discipline-image {
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .discipline-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .discipline-card:hover .discipline-image img {
+            transform: scale(1.1);
+        }
+
+        .discipline-info {
+            padding: 20px;
+        }
+
+        .discipline-info h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: var(--violet);
+        }
+
+        .discipline-info p {
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .contact {
+            background-color: white;
+        }
+
+        .contact-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-evenly;
+            gap: 40px;
+        }
+
+        .contact-info {
+            flex: 1;
+            min-width: 300px;
+            max-width: 500px;
+        }
+
+        .contact-info h3 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: var(--blue);
+        }
+
+        .contact-details {
+            margin-bottom: 30px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .contact-item i {
+            width: 30px;
+            color: var(--violet);
+            font-size: 1.2rem;
+            margin-top: 3px;
+        }
+
+        .contact-item-content {
+            flex: 1;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: var(--violet);
+            color: white;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .social-link:hover {
+            background-color: var(--blue);
+            transform: translateY(-3px);
+        }
+
+        .contact-map {
+            flex: 1;
+            height: 400px;
+            min-width: 300px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 30px 0;
+            text-align: center;
+        }
+
+        .footer-content {
+            margin-bottom: 20px;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            margin-bottom: 20px;
+        }
+
+        .footer-links li {
+            margin: 0 15px;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--orange);
+        }
+
+        .copyright {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Animaciones al hacer scroll */
+        .animate {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.5s ease;
+        }
+
+        .animate.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive styles */
+        @media (max-width: 992px) {
+            .hamburger {
+                display: block;
+            }
+
+            .hamburger.active .bar:nth-child(2) {
+                opacity: 0;
+            }
+
+            .hamburger.active .bar:nth-child(1) {
+                transform: translateY(8px) rotate(45deg);
+            }
+
+            .hamburger.active .bar:nth-child(3) {
+                transform: translateY(-8px) rotate(-45deg);
+            }
+
+            .nav-menu {
+                position: fixed;
+                left: -100%;
+                top: 70px;
+                gap: 0;
+                flex-direction: column;
+                background-color: white;
+                width: 100%;
+                text-align: center;
+                transition: 0.3s;
+                box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+                padding: 20px 0;
+            }
+
+            .nav-item {
+                margin: 15px 0;
+            }
+
+            .nav-menu.active {
+                left: 0;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .service-card {
+                width: 100%;
+                max-width: 350px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .section-title h2 {
+                font-size: 2rem;
+            }
+
+            .about-content, .contact-content {
+                flex-direction: column;
+            }
+
+            .contact-map {
+                height: 300px;
+                margin-top: 30px;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .gallery-container {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <a href="#" class="logo"><i class="fas fa-skating"></i>Indepe<span>Roller</span></a>
+                <ul class="nav-menu">
+                    <li class="nav-item"><a href="#home" class="nav-link">Inicio</a></li>
+                    <li class="nav-item"><a href="#about" class="nav-link">¿Quiénes Somos?</a></li>
+                    <li class="nav-item"><a href="#services" class="nav-link">¿Qué Hacemos?</a></li>
+                    <li class="nav-item"><a href="#gallery" class="nav-link">Galería</a></li>
+                    <li class="nav-item"><a href="#disciplines" class="nav-link">Disciplinas</a></li>
+                    <li class="nav-item"><a href="#contact" class="nav-link">Contacto</a></li>
+                </ul>
+                <div class="hamburger">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <img src="https://i.imgur.com/X8YtCAE.png" alt="Logo IndepeRoller" class="logo-image">
+            <h1>¡Bienvenidos a IndepeRoller!</h1>
+            <p>Rodar, aprender y pasarlo bien: eso es Indepe Roller. Únete a una comunidad donde el patinaje es libertad, desde moverte por la ciudad hasta probar SkateCross o Alpino. Para chicos, grandes y quienes recién empiezan. ¡Súbete a los patines y disfruta el viaje!</p>
+            <a href="#contact" class="btn btn-orange">Únete ahora</a>
+        </div>
+        <div class="wave"></div>
+    </section>
+
+    <section id="about" class="about">
+        <div class="container">
+            <div class="section-title">
+                <h2>¿Quiénes Somos?</h2>
+            </div>
+            <div class="about-content">
+                <div class="about-text animate">
+                    <h3>Nuestra Historia</h3>
+                    <p>IndepeRoller es un club que se formó en la Comuna de Independencia, bajo la dirección de Evelyn Gonzalez, con los siguientes objetivos:</p>
+                    <ul>
+                        <li>Fomentar el deporte y la actividad física en la comuna de Independencia, especialmente entre niños y jóvenes.</li>
+                        <li>Promover el patinaje urbano como una alternativa recreativa y deportiva.</li>
+                        <li>Ofrecer un espacio inclusivo y seguro para la recreación, la participación familiar y la vida en comunidad.</li>
+                        <li>Recuperar el espacio público como escenario activo de cultura y deporte, impulsando la apropiación positiva del entorno barrial.</li>
+                        <li>Impulsar la formación de nuevos talentos deportivos, con miras a integrar a jóvenes promesas a las selecciones nacionales del patinaje urbano, particularmente en la categoría junior.</li>
+                    </ul>
+                </div>
+                <div class="about-image animate">
+                    <img src="https://i.imgur.com/rX21IVd.jpg" alt="Club de patinaje IndepeRoller">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="services" class="services">
+        <div class="wave-top"></div>
+        <div class="container">
+            <div class="section-title">
+                <h2>¿Qué Hacemos?</h2>
+            </div>
+            <div class="service-cards">
+                <div class="service-card animate">
+                    <i class="fas fa-graduation-cap"></i>
+                    <h3>Clases de Patinaje</h3>
+                    <p>Ofrecemos clases para principiantes, tanto niños como adultos, en un ambiente seguro y divertido.</p>
+                </div>
+                <div class="service-card animate">
+                    <i class="fas fa-users"></i>
+                    <h3>Clases Grupales por Disciplina</h3>
+                    <p>Disponemos de diferentes niveles y disciplinas para que cada patinador encuentre su estilo.</p>
+                </div>
+                <div class="service-card animate">
+                    <i class="fas fa-medal"></i>
+                    <h3>Apoyo a Jóvenes Promesas</h3>
+                    <p>Brindamos apoyo especial a jóvenes talentos para participar en campeonatos nacionales e internacionales.</p>
+                </div>
+                <div class="service-card animate">
+                    <i class="fas fa-calendar-alt"></i>
+                    <h3>Organización de Eventos</h3>
+                    <p>Creamos y organizamos eventos relacionados con el patinaje para toda la comunidad.</p>
+                </div>
+                <div class="service-card animate">
+                    <i class="fas fa-trophy"></i>
+                    <h3>Torneos Competitivos</h3>
+                    <p>Organizamos torneos de diferentes disciplinas para fomentar el espíritu deportivo.</p>
+                </div>
+            </div>
+        </div>
+        <div class="wave-bottom"></div>
+    </section>
+
+    <section id="gallery" class="gallery">
+        <div class="container">
+            <div class="section-title">
+                <h2>Galería</h2>
+            </div>
+            <div class="gallery-container">
+                <div class="gallery-item animate">
+                    <img src="https://i.imgur.com/rX21IVd.jpg" alt="Patinadores en acción">
+                    <div class="gallery-caption">
+                        <h3>Clases grupales</h3>
+                    </div>
+                </div>
+                <div class="gallery-item animate">
+                    <img src="https://i.imgur.com/fvp0rGb.jpg" alt="Patinadores en pista">
+                    <div class="gallery-caption">
+                        <h3>Entrenamiento en pista</h3>
+                    </div>
+                </div>
+                <div class="gallery-item animate">
+                    <img src="https://i.imgur.com/nSJjYJt.jpg" alt="Patinadores en la calle">
+                    <div class="gallery-caption">
+                        <h3>Patinaje urbano</h3>
+                    </div>
+                </div>
+                <div class="gallery-item animate">
+                    <img src="https://i.imgur.com/dUX27tW.jpg" alt="Skatepark">
+                    <div class="gallery-caption">
+                        <h3>Skatepark</h3>
+                    </div>
+                </div>
+                <div class="gallery-item animate">
+                    <img src="https://i.imgur.com/nUVtJkD.jpg" alt="Competición">
+                    <div class="gallery-caption">
+                        <h3>Competiciones</h3>
+                    </div>
+                </div>
+                <div class="gallery-item animate">
+                    <img src="https://i.imgur.com/GVLXxPF.jpg" alt="Niños patinando">
+                    <div class="gallery-caption">
+                        <h3>Clases para niños</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+<section id="disciplines" class="disciplines">
+        <div class="container">
+            <div class="section-title">
+                <h2>Nuestras Disciplinas</h2>
+            </div>
+            <div class="disciplines-content">
+                <div class="discipline-card animate">
+                    <div class="discipline-image">
+                        <img src="https://i.imgur.com/nSJjYJt.jpg" alt="Patinaje Urbano">
+                    </div>
+                    <div class="discipline-info">
+                        <h3>Patinaje Urbano</h3>
+                        <p>Aprende a moverte con seguridad y estilo por la ciudad, desarrollando habilidades para superar obstáculos urbanos.</p>
+                    </div>
+                </div>
+                <div class="discipline-card animate">
+                    <div class="discipline-image">
+                        <img src="https://i.imgur.com/dUX27tW.jpg" alt="SkateCross">
+                    </div>
+                    <div class="discipline-info">
+                        <h3>SkateCross</h3>
+                        <p>Una emocionante disciplina donde varios patinadores compiten simultáneamente en un circuito con curvas y obstáculos.</p>
+                    </div>
+                </div>
+                <div class="discipline-card animate">
+                    <div class="discipline-image">
+                        <img src="https://i.imgur.com/GVLXxPF.jpg" alt="Patinaje Alpino">
+                    </div>
+                    <div class="discipline-info">
+                        <h3>Patinaje Alpino</h3>
+                        <p>Descenso en patines por pendientes, similar al esquí alpino, combinando velocidad y técnica en un deporte extremo.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="section-title">
+                <h2>Contacto</h2>
+            </div>
+            <div class="contact-content">
+                <div class="contact-info animate">
+                    <h3>¿Quieres unirte o saber más?</h3>
+                    <div class="contact-details">
+                        <div class="contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <div class="contact-item-content">
+                                <p>evelyn.gonzalez.ca@usach.cl</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-phone"></i>
+                            <div class="contact-item-content">
+                                <p>+569 XXXX XXXX</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <div class="contact-item-content">
+                                <p>Comuna de Independencia, Santiago, Chile</p>
+                            </div>
+                        </div>
+                    </div>
+                    <h3>Síguenos en redes</h3>
+                    <div class="social-links">
+                        <a href="https://www.instagram.com/indepe.roller" class="social-link" target="_blank">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                    <div style="margin-top: 30px;">
+                        <a href="mailto:evelyn.gonzalez.ca@usach.cl" class="btn btn-orange">Escríbenos un correo</a>
+                    </div>
+                </div>
+                <div class="contact-map">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d13315.63868850525!2d-70.6664847767578!3d-33.41973895!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9662c5a3b6157d5f%3A0x9f3d790c8bdce80f!2sIndependencia%2C%20Regi%C3%B3n%20Metropolitana!5e0!3m2!1ses!2scl!4v1712775214592!5m2!1ses!2scl" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <p>IndepeRoller - Club de Patinaje Urbano</p>
+            </div>
+            <ul class="footer-links">
+                <li><a href="#home">Inicio</a></li>
+                <li><a href="#about">¿Quiénes Somos?</a></li>
+                <li><a href="#services">¿Qué Hacemos?</a></li>
+                <li><a href="#gallery">Galería</a></li>
+                <li><a href="#disciplines">Disciplinas</a></li>
+                <li><a href="#contact">Contacto</a></li>
+            </ul>
+            <div class="copyright">
+                <p>&copy; 2025 IndepeRoller. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Menú hamburguesa
+        const hamburger = document.querySelector(".hamburger");
+        const navMenu = document.querySelector(".nav-menu");
+
+        hamburger.addEventListener("click", () => {
+            hamburger.classList.toggle("active");
+            navMenu.classList.toggle("active");
+        });
+
+        document.querySelectorAll(".nav-link").forEach(n => n.addEventListener("click", () => {
+            hamburger.classList.remove("active");
+            navMenu.classList.remove("active");
+        }));
+
+        // Animaciones al hacer scroll
+        const animateElements = document.querySelectorAll('.animate');
+
+        function checkScroll() {
+            animateElements.forEach(el => {
+                const elTop = el.getBoundingClientRect().top;
+                const triggerPoint = window.innerHeight * 0.8;
+                
+                if (elTop < triggerPoint) {
+                    el.classList.add('active');
+                }
+            });
+        }
+
+        window.addEventListener('load', checkScroll);
+        window.addEventListener('scroll', checkScroll);
+
+        // Scroll suave
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
